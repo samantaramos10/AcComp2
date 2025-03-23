@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/carrito.css" />
+<title>Casa Bonita - Menu</title>
+</head>
+<body>
+    <main>
+    <header>
+        <h1 class="Titulo-pagina">Casa Bonita</h1>
+
+        <section class="logo">
+            <img src="resources/guacamole.jpg" alt="">
+        </section>
+    
+        <nav class="nav">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="resenas.html">Reseñas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+<h1 class="carrito">Carrito de Compras</h1>
+<div class="cart-container">
+    <div id="cart-items"></div>
+    <div class="cart-total">
+        Total: <span id="cart-total">$0</span>
+    </div>
+    <button class="checkout-button" onclick="showPaymentForm()">Proceder al Pago</button>
+
+    <!-- Formulario de pago (oculto por defecto) -->
+    <div class="payment-form" id="payment-form">
+        <div class="form-group">
+            <label for="card-number">Número de Tarjeta</label>
+            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+        </div>
+        <div class="form-group">
+            <label for="card-expiry">Fecha de Expiración</label>
+            <input type="text" id="card-expiry" placeholder="MM/YY" required>
+        </div>
+        <div class="form-group">
+            <label for="card-cvc">CVC</label>
+            <input type="text" id="card-cvc" placeholder="123" required>
+        </div>
+        <button type="submit" class="checkout-button" onclick="processPayment()">Pagar Ahora</button>
+    </div>
+
+    <!-- Métodos de pago (ocultos por defecto) -->
+    <div class="payment-methods" id="payment-methods">
+        <img src="https://static.vecteezy.com/system/resources/previews/020/336/392/non_2x/visa-logo-visa-icon-free-free-vector.jpg" alt="Visa">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKA0Vqk8mPXs_aKlgXBlm7IJ-ov1wqWd-v3A&s" alt="Mastercard">
+        <img src="https://cdn.prod.website-files.com/57d82afb270afde9489593e5/6151f82178d2b9b9151c157c_R.png" alt="PayPal">
+        <img src="https://icm.aexp-static.com/Internet/internationalcardshop/es_ar/images/cards/the-gold-card.png" alt="Otro">
+    </div>
+</div>
+
+<script>
+    // Obtener los datos del carrito desde localStorage
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const total = parseFloat(localStorage.getItem('total')) || 0;
+
+    // Mostrar los productos en el carrito
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+
+    cart.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'cart-item';
+        itemDiv.innerHTML = `
+            <span>${item.name}</span>
+            <span>$${item.price}</span>
+        `;
+        cartItems.appendChild(itemDiv);
+    });
+
+    // Mostrar el total
+    cartTotal.textContent = `$${total.toFixed(2)}`;
+
+    // Función para mostrar el formulario de pago y los métodos de pago
+    function showPaymentForm() {
+        const paymentForm = document.getElementById('payment-form');
+        const paymentMethods = document.getElementById('payment-methods');
+
+        // Mostrar el formulario y los métodos de pago
+        paymentForm.style.display = 'block';
+        paymentMethods.style.display = 'flex';
+
+        // Ocultar el botón "Proceder al Pago"
+        const checkoutButton = document.querySelector('.checkout-button');
+        checkoutButton.style.display = 'none';
+    }
+
+    // Función para procesar el pago
+    function processPayment() {
+        const cardNumber = document.getElementById('card-number').value;
+        const cardExpiry = document.getElementById('card-expiry').value;
+        const cardCVC = document.getElementById('card-cvc').value;
+
+        if (cardNumber && cardExpiry && cardCVC) {
+            alert(`Pago exitoso por $${total.toFixed(2)}. ¡Gracias por su compra!`);
+            localStorage.removeItem('cart'); // Limpiar el carrito
+            localStorage.removeItem('total'); // Limpiar el total
+            window.location.href = 'index.html'; // Redirigir a la página principal
+        } else {
+            alert('Por favor, complete todos los campos del formulario de pago.');
+        }
+    }
+</script>
+</body>
+
+<footer>	
+    <section class="footer-icons-container">
+        <div class="icons">
+            <a href="https://www.facebook.com" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/1024px-2021_Facebook_icon.svg.png" alt="">
+            </a>
+            <a href="https://www.twitter.com" target="_blank">
+                <img src="https://img.icons8.com/ios7/512/FFFFFF/twitterx.png" alt="">					
+            </a>
+            <a href="https://www.instagram.com" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/5968/5968776.png" alt="">
+            </a>
+    </section>
+</footer>	
+
+</html>

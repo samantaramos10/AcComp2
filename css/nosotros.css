@@ -1,0 +1,24 @@
+.contenedor img {
+    max-width: 100%;
+}
+
+.contenido-nosotros {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 2rem;
+}
+
+.texto-nosotros h2 {
+    font-weight: 700;
+    font-size: 2rem;
+    margin: 0;
+    padding: 2rem 0 1rem 0;
+    text-align: left;
+}
+
+
+.header h1 {
+	text-align: left;
+	font-size: 36px;
+}
+

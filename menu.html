@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Casa bonita - Menu</title>
+		<link rel="stylesheet" href="css/styles.css" />
+
+		<title>Casa Bonita - Menu</title>
+	</head>
+	<body>
+		<main>
+		<header>
+			<h1 class="Titulo-pagina">Casa Bonita</h1>
+
+			<section class="logo">
+				<img src="resources/guacamole.jpg" alt="">
+			</section>
+		
+			<nav class="nav">
+				<ul>
+					<li><a href="index.html">Inicio</a></li>
+					<li><a href="menu.html">Menu</a></li>
+					<li><a href="nosotros.html">Nosotros</a></li>
+					<li><a href="contacto.html">Contacto</a></li>
+					<li><a href="resenas.html">Reseñas</a></li>
+				</ul>
+			</nav>
+
+			<!-------------------------- CARRITO DE COMPRAS ---------------------->
+
+
+
+	<div class="container-icon">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			fill="none"
+			viewBox="0 0 24 24"
+			stroke-width="1.5"
+			stroke="currentColor"
+			class="icon-cart"
+			onclick="redirectToCart()" <!-- Cambiado a redirectToCart -->
+		>
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+			/>
+		</svg>
+		<div class="count-products">
+			<span id="contador-productos">0</span>
+		</div>
+	
+		<div class="container-cart-products hidden-cart" id="cart-container">
+			<div id="cart-products"></div>
+			<div class="cart-total">
+				<h3>Total:</h3>
+				<span class="total-pagar" id="total-pagar">$0</span>
+			</div>
+		</div>
+	</div>
+	
+	<!--SCRIPT PARA AGREGAR PRODUCTOS AL CARRITO-->
+	<script>
+		let cart = [];
+		let total = 0;
+	
+		// Función para redirigir a la página del carrito
+		function redirectToCart() {
+			// Guardar el carrito y el total en localStorage
+			localStorage.setItem('cart', JSON.stringify(cart));
+			localStorage.setItem('total', total.toFixed(2));
+			// Redirigir a la página del carrito
+			window.location.href = 'carrito.html';
+		}
+	
+		function addToCart(productName, price) {
+			cart.push({ name: productName, price: price });
+			total += price;
+			updateCart();
+		}
+	
+		function updateCart() {
+			const cartProducts = document.getElementById('cart-products');
+			const totalPagar = document.getElementById('total-pagar');
+			const contadorProductos = document.getElementById('contador-productos');
+	
+			cartProducts.innerHTML = '';
+			cart.forEach((item, index) => {
+				const productDiv = document.createElement('div');
+				productDiv.className = 'cart-product';
+				productDiv.innerHTML = `
+					<div class="info-cart-product">
+						<span class="cantidad-producto-carrito"></span>
+						<p class="titulo-producto-carrito">${item.name}</p>
+						<span class="precio-producto-carrito">$${item.price}</span>
+					</div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="icon-close"
+						onclick="removeFromCart(${index})"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M6 18L18 6M6 6l12 12"
+						/>
+					</svg>
+				`;
+				cartProducts.appendChild(productDiv);
+			});
+	
+			totalPagar.textContent = `$${total}`;
+			contadorProductos.textContent = cart.length;
+		}
+	
+		function removeFromCart(index) {
+			total -= cart[index].price;
+			cart.splice(index, 1);
+			updateCart();
+		}
+	</script>
+
+	</header>
+
+		<div class="banner">
+			<div class="texto-deslizante">
+			  ¡La mejor comida Mexicana, donde el chile y el maíz se encuentran Ven y saborea el México más auténtico!
+			</div>
+		</div>
+					<!-------------------------- CATALOGO ----------------------->
+		
+		<div class="container-items">
+			<div class="item">
+				<figure>
+					<img
+						src="resources/chiles.jpg"
+						alt="producto"
+					/>
+				</figure>
+				<div class="info-product">
+					<h2>Chiles en Nogada</h2>
+					<p class="price">$80</p>
+					<button onclick="addToCart('Chiles en Nogada', 80)">Añadir al carrito</button>
+				</div>
+			</div>
+			<div class="item">
+				<figure>
+					<img
+						src="resources/cochina.png"
+						alt="producto"
+					/>
+				</figure>
+				<div class="info-product">
+					<h2>Cochinita pibil</h2>
+					<p class="price">$20</p>
+					<button onclick="addToCart('Cochinita pibil', 20)">Añadir al carrito</button>
+				</div>
+			</div>
+			<div class="item">
+				<figure>
+					<img
+						src="resources/flauta.jpg"
+						alt="producto"
+					/>
+				</figure>
+				<div class="info-product">
+					<h2>Flautas de carne</h2>
+					<p class="price">$50</p>
+					<button onclick="addToCart('Flautas de carne', 50)">Añadir al carrito</button>
+				</div>
+			</div>
+			<div class="item">
+				<figure>
+					<img
+						src="resources/gordas.jpg"
+						alt="producto"
+					/>
+				</figure>
+				<div class="info-product">
+					<h2>Gorditas de chicharron y queso</h2>
+					<p class="price">$90</p>
+					<button onclick="addToCart('Gorditas de chicharron y queso', 90)">Añadir al carrito</button>
+				</div>
+			</div>
+			<div class="item">
+				<figure>
+					<img
+						src="resources/pambazo.jpeg"
+						alt="producto"
+					/>
+				</figure>
+				<div class="info-product">
+					<h2>Pambazo de papa y choricillo</h2>
+					<p class="price">$50</p>
+					<button onclick="addToCart('Pambazo de papa y choricillo', 70)">Añadir al carrito</button>
+				</div>
+			</div>
+			<div class="item">
+				<figure>
+					<img
+						src="resources/polloMole.jpg"
+						alt="producto"
+					/>
+				</figure>
+				<div class="info-product">
+					<h2>Pollo con mole</h2>
+					<p class="price">$120</p>
+					<button onclick="addToCart('Pollo con mole', 120)">Añadir al carrito</button>
+				</div>
+			</div>
+			<div class="item">
+				<figure>
+					<img
+						src="resources/pozole.png"
+						alt="producto"
+					/>
+				</figure>
+				<div class="info-product">
+					<h2>Pozole</h2>
+					<p class="price">$120</p>
+					<button onclick="addToCart('Pollo con mole', 120)">Pozole</button>
+				</div>
+			</div>
+			<div class="item">
+				<figure>
+					<img
+						src="resources/guacamole.jpg"
+						alt="producto"
+					/>
+				</figure>
+				<div class="info-product">
+					<h2>Orden de Guacamole</h2>
+					<p class="price">$50</p>
+					<button onclick="addToCart('Orden de Guacamole', 50)">Pozole</button>
+				</div>
+			</div>
+			<div class="item">
+				<figure>
+					<img
+						src="resources/tacos.jpg"
+						alt="producto"
+					/>
+				</figure>
+				<div class="info-product">
+					<h2>Tacos de pastor</h2>
+					<p class="price">$100</p>
+					<button onclick="addToCart('Tacos de pastor', 100)">Pozole</button>
+				</div>
+			</div>
+		</div>
+
+		<script src="index.js"></script>
+		
+	</body>
+	</main>
+	
+	<footer>	
+		<section class="footer-icons-container">
+			<div class="icons">
+				<a href="https://www.facebook.com" target="_blank">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/1024px-2021_Facebook_icon.svg.png" alt="">
+				</a>
+				<a href="https://www.twitter.com" target="_blank">
+					<img src="https://img.icons8.com/ios7/512/FFFFFF/twitterx.png" alt="">					
+				</a>
+				<a href="https://www.instagram.com" target="_blank">
+					<img src="https://cdn-icons-png.flaticon.com/512/5968/5968776.png" alt="">
+				</a>
+		</section>
+	</footer>	
+
+
+</html>
